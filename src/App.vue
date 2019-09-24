@@ -2,6 +2,7 @@
   <div id="app">
     <div class="container">
       <img alt="Vue logo" src="./assets/logo.png">
+      <AddTodo />
       <Todos />
     </div>
   </div>
@@ -9,11 +10,13 @@
 
 <script>
 import Todos from './components/Todos.vue'
+import AddTodo from './components/AddTodo'
 
 export default {
   name: 'app',
   components: {
     Todos,
+    AddTodo
   }
 }
 </script>
