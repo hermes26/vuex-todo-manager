@@ -10,11 +10,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'; //mapped getters from vuex to our component
+import { mapGetters, mapActions } from 'vuex'; //mapped getters from vuex to our component
 export default {
     name: "Todos",
     computed: mapGetters(['allTodos']), //passing the array of getters we want, using computed, will allow us to use the getter in our component
-
+    // methods: mapActions(['fetchTodos']) if we had only one method
+    //multiple methods:
+    methods: {
+        ...mapActions(['fetchTodos']), //the fetchTodo is not called yet, it is just matched to the todos component. use lifecycle method created to call
+    },
+    created(){//lifecycle method
+        this.fetchTodos(); //calls the fetchTodos action
+    }
 }
 </script>
 
