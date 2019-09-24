@@ -2,8 +2,9 @@
   <div>
       <h3>Add Todo</h3>
       <div class="add">
-          <form>
-              <input type="text" v-model="title" placeholder="Add To Do...">
+          <form @submit="onSubmit">
+              <input type="text" v-model="title" placeholder="Add To Do..."> 
+              <!-- whenever you have a v-model, must add a data method in the script, that will return an object that has that title -->
               <input type="submit" value="Submit">
           </form>
       </div>
@@ -11,8 +12,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
-    name: 'AddTodo'
+    name: 'AddTodo',
+    data(){
+        return{
+            title: ''
+        }
+    },
+    methods: {
+        ...mapActions(['addTodo']),
+        onSubmit(e) {
+            e.preventDefault();
+            this.addTodo(this.title); //calls the addTodo action
+        }
+    }
 }
 </script>
 
