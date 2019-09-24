@@ -21,12 +21,18 @@ const actions = {//need an action that is going to make a request, get a respons
             completed: false
         });
         commit('newTodo', response.data);
+    },
+
+    async deleteTodo( {commit}, id ) {
+        await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);//this would in a real app delete from the server
+        commit('removeTodo', id);
     }
 };
 
 const mutations = {//this is what actually mutates the action to the state
     setTodos: (state, todos) => state.todos = todos, //todos is the response.data passed in the commit action
     newTodo: (state, todo) => state.todos.unshift(todo),
+    removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id != id), //this removes the todo in the ui
 };
 
 export default {
