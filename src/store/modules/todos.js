@@ -26,6 +26,14 @@ const actions = {//need an action that is going to make a request, get a respons
     async deleteTodo( {commit}, id ) {
         await axios.delete(`https://jsonplaceholder.typicode.com/todos/${id}`);//this would in a real app delete from the server
         commit('removeTodo', id);
+    },
+
+    async filterTodos( {commit}, e ) {
+        //get selected number
+        const limit = parseInt(e.target.options[e.target.selectedIndex].innerText);
+        console.log(limit);
+        const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`);
+        commit('setTodos', response.data);
     }
 };
 
