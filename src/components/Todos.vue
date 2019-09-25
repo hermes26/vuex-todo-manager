@@ -11,7 +11,10 @@
         </span>
     </div>
       <div class="todos">
-          <div v-for="todo in allTodos" v-bind:key="todo.id" class="todo"> <!-- when we loop through something we need to have a unique key -->
+          <div @dblclick="onDblClick(todo)" v-for="todo in allTodos" v-bind:key="todo.id" 
+          class="todo" v-bind:class="{'is-complete':todo.completed}"> 
+              <!-- when we loop through something we need to have a unique key -->
+              <!-- asign the class name is-completed if todo.completed is true -->
             {{todo.title}}
             <i @click="deleteTodo(todo.id)" class="fas fa-trash-alt"></i>
             <!-- calling the deleteTodo action directly from here. but first need to bring it in, in the methods mapaction -->
@@ -28,7 +31,15 @@ export default {
     // methods: mapActions(['fetchTodos']) if we had only one method
     //multiple methods:
     methods: {
-        ...mapActions(['fetchTodos', 'deleteTodo']), //the fetchTodo is not called yet, it is just matched to the todos component. use lifecycle method created to call
+        ...mapActions(['fetchTodos', 'deleteTodo', 'updateTodo']), //the fetchTodo is not called yet, it is just matched to the todos component. use lifecycle method created to call
+        onDblClick(todo) {
+            const updTodo = {
+                id: todo.id,
+                title: todo.title,
+                completed: !todo.completed,
+            }
+            this.updateTodo(updTodo);
+        }
     },
     created(){//lifecycle method
         this.fetchTodos(); //calls the fetchTodos action

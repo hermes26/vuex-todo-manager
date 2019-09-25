@@ -34,6 +34,12 @@ const actions = {//need an action that is going to make a request, get a respons
         console.log(limit);
         const response = await axios.get(`https://jsonplaceholder.typicode.com/todos?_limit=${limit}`);
         commit('setTodos', response.data);
+    },
+
+    async updateTodo( {commit}, updTodo) {
+        const response = await axios.put(`https://jsonplaceholder.typicode.com/todos/${updTodo.id}`, updTodo);//when updating somthing, use a put request
+        console.log(response.data);
+        commit('updateTodo', response.data);
     }
 };
 
@@ -41,6 +47,12 @@ const mutations = {//this is what actually mutates the action to the state
     setTodos: (state, todos) => state.todos = todos, //todos is the response.data passed in the commit action
     newTodo: (state, todo) => state.todos.unshift(todo),
     removeTodo: (state, id) => state.todos = state.todos.filter(todo => todo.id != id), //this removes the todo in the ui
+    updateTodo: (state, updTodo) => {
+        const index = state.todos.findIndex(todo => todo.id === updTodo.id);
+        if (index !== -1) {
+            state.todos.splice(index, 1, updTodo);
+        }
+    }
 };
 
 export default {
